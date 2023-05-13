@@ -30,9 +30,19 @@ public class PersonServiceImpl implements PersonService, PersonExistService {
     @Override
     public PersonResponse getOne(LoginPersonRequest request) throws ErrorProcessException {
         Person person = personRepository.findByUsername(request.getUsername()).orElseThrow(() -> new NotFoundException("Wrong username or password"));
-        if (!person.getEmail().equals(request.getPass())) throw new NotFoundException("Wrong username or password");
+        if (!person.getPass().equals(request.getPass())) throw new NotFoundException("Username or password doesn´t match");
         try{
             return PersonResponse.toResponse(person);
+        } catch (RuntimeException e) {
+            throw new ErrorProcessException("An error occurred in the process: " + e.getMessage());
+        }
+    }
+
+    @Override
+    public PersonResponse getOneByUsername(String username) throws ErrorProcessException {
+        if (!personRepository.existsByUsername(username)) throw new NotFoundException("This person ("+username+") doesn´t exist in the DB");
+        try{
+            return PersonResponse.toResponse(personRepository.findByUsername(username).get());
         } catch (RuntimeException e) {
             throw new ErrorProcessException("An error occurred in the process: " + e.getMessage());
         }

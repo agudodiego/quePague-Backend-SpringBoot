@@ -9,6 +9,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Data
 @AllArgsConstructor
@@ -24,5 +25,11 @@ public class PersonResponse {
                 .username(person.getUsername())
                 .payments(person.getPayments())
                 .build();
+    }
+
+    public static Set<PaymentResponse> paymentsToResponses(Set<Payment> payments) {
+        return payments.stream()
+                .map(PaymentResponse::toResponse)
+                .collect(Collectors.toSet());
     }
 }

@@ -11,9 +11,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
 public class RegisterPersonRequest {
 
     @NotBlank(message = "username can't be blank")
@@ -27,18 +27,10 @@ public class RegisterPersonRequest {
     private String email;
 
     public static Person toEntity(RegisterPersonRequest request) {
-        Person person = new Person();
-        person.setUsername(request.getUsername());
-        person.setPass(request.getPass());
-        person.setEmail(request.getEmail());
-        return person;
+        return Person.builder()
+                .username(request.getUsername())
+                .pass(request.getPass())
+                .email(request.getEmail())
+                .build();
     }
-
-//    public static Person toEntity(RegisterPersonRequest request) {
-//        return Person.builder()
-//                .username(request.getUsername())
-//                .pass(request.getPass())
-//                .email(request.getEmail())
-//                .build();
-//    }
 }

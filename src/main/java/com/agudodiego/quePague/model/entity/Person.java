@@ -1,6 +1,8 @@
 package com.agudodiego.quePague.model.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -8,6 +10,8 @@ import java.util.Set;
 
 @Entity
 @Data
+@Builder // lo necesito en la entidad para poder mapear luego en el dto
+@AllArgsConstructor // @Builder necesita de esta annotation
 @NoArgsConstructor
 @Table(name = "person")
 public class Person {

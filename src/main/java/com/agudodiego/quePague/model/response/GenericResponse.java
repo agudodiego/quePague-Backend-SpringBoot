@@ -9,4 +9,5 @@ public class GenericResponse {
     public Boolean success;
     public String message;
     public Object data;
+
 }

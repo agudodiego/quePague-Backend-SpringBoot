@@ -9,6 +9,7 @@ public interface PersonService {
 
     String saveOne(RegisterPersonRequest request);
     PersonResponse getOne(LoginPersonRequest request) throws ErrorProcessException;
+    PersonResponse getOneByUsername(String username) throws ErrorProcessException;
 
 }
 
