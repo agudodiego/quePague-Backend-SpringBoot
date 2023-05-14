@@ -24,6 +24,7 @@ public class Person {
     @Column(name = "email", length = 45, nullable = false)
     private String email;
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "username") // como es una relacion UNIDIRECCIONAL agrego esta annotation para que no cree una tabla intermedia y pueda borrar el pago sin acceder al padre de la relacion
     private Set<Payment> payments;
 
 }

@@ -7,7 +7,7 @@ import com.agudodiego.quePague.model.request.LoginPersonRequest;
 import com.agudodiego.quePague.model.request.RegisterPersonRequest;
 import com.agudodiego.quePague.model.response.PersonResponse;
 import com.agudodiego.quePague.repository.PersonRepository;
-import com.agudodiego.quePague.service.interfaces.PersonExistService;
+import com.agudodiego.quePague.service.interfaces.PersonExistsService;
 import com.agudodiego.quePague.service.interfaces.PersonService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class PersonServiceImpl implements PersonService, PersonExistService {
+public class PersonServiceImpl implements PersonService, PersonExistsService {
 
     private final PersonRepository personRepository;
 
