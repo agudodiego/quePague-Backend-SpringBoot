@@ -13,7 +13,10 @@ import com.agudodiego.quePague.service.interfaces.PaymentExitsService;
 import com.agudodiego.quePague.service.interfaces.PaymentService;
 import com.agudodiego.quePague.service.interfaces.PersonExistsService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
+
+import java.sql.SQLException;
 
 @Service
 @RequiredArgsConstructor
@@ -23,12 +26,19 @@ public class PaymentServiceImpl implements PaymentService, PersonExistsService, 
     private final PersonRepository personRepository;
 
     @Override
-    public PersonResponse saveOne(String username, Payment payment) throws ErrorProcessException {
-        if (!personExists(username)) throw new NotFoundException("This person ("+username+") doesn´t exist in the DB");
+    public PaymentResponse saveOne(String username, Payment payment) throws ErrorProcessException {
+        Person person = personRepository.findByUsername(username).orElseThrow(()-> new NotFoundException("This person ("+username+") doesn´t exist in the DB"));
+        for (Payment pa: person.getPayments()) {
+            if (pa.getTitle().equals(payment.getTitle())) throw new DataIntegrityViolationException("Use another title for the payment");
+        }
         try{
-            Person person = personRepository.findByUsername(username).get();
             person.getPayments().add(payment);
-            return PersonResponse.toResponse(personRepository.save(person));
+            personRepository.save(person);
+            Payment justAddedPayment = personRepository.findByUsername(username).get().getPayments().stream()
+                    .filter((p)-> p.getTitle().equals(payment.getTitle()))
+                    .findFirst()
+                    .orElseThrow(()->new NotFoundException("The payment doesn´t exist"));
+            return PaymentResponse.toResponse(justAddedPayment);
         } catch (RuntimeException e) {
             throw new ErrorProcessException("An error occurred in the process: " + e.getMessage());
         }

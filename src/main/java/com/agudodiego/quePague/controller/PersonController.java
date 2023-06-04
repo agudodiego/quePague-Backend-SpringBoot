@@ -19,4 +19,14 @@ public class PersonController {
     public ResponseEntity<GenericResponse> getOnePerson(@PathVariable String username) throws ErrorProcessException {
         return ResponseEntity.status(HttpStatus.OK).body(new GenericResponse(Boolean.TRUE, "Person found", personService.getOneByUsername(username)));
     }
+
+    @GetMapping
+    public ResponseEntity<GenericResponse> getAllBasicPeople() throws ErrorProcessException {
+        return ResponseEntity.status(HttpStatus.OK).body(new GenericResponse(Boolean.TRUE, "List of people found", personService.getBasicList()));
+    }
+
+    @DeleteMapping("{username}")
+    public ResponseEntity<GenericResponse> deletePerson(@PathVariable String username) throws ErrorProcessException {
+        return ResponseEntity.status(HttpStatus.OK).body(new GenericResponse(Boolean.TRUE, "Deletion OK", personService.deletePerson(username)));
+    }
 }
