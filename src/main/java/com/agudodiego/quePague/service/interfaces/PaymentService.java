@@ -8,7 +8,7 @@ import com.agudodiego.quePague.model.response.PersonResponse;
 
 public interface PaymentService {
 
-    PersonResponse saveOne(String username, Payment payment) throws ErrorProcessException;
+    PaymentResponse saveOne(String username, Payment payment) throws ErrorProcessException;
     PaymentResponse updatePayment(Payment payment) throws ErrorProcessException;
     String deletePayment(Integer id) throws ErrorProcessException;
 }

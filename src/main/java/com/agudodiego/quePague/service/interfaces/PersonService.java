@@ -14,6 +14,7 @@ public interface PersonService {
     PersonResponse getOne(LoginPersonRequest request) throws ErrorProcessException;
     PersonResponse getOneByUsername(String username) throws ErrorProcessException;
     List<BasicListPersonResponse> getBasicList() throws ErrorProcessException;
+    String deletePerson(String username) throws ErrorProcessException;
 
 }
 

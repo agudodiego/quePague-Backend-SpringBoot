@@ -64,6 +64,17 @@ public class PersonServiceImpl implements PersonService, PersonExistsService {
         }
     }
 
+    @Override
+    public String deletePerson(String username) throws ErrorProcessException {
+        Person personToDelete = personRepository.findByUsername(username).orElseThrow(()-> new NotFoundException("This person ("+username+") doesn´t exist in the DB"));
+        try{
+            personRepository.delete(personToDelete);
+            return username + "was deleted";
+        } catch (RuntimeException e) {
+            throw new ErrorProcessException("An error occurred in the process: " + e.getMessage());
+        }
+    }
+
 
     @Override
     public Boolean personExists(String username) {
