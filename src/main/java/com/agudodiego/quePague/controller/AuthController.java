@@ -26,14 +26,4 @@ public class AuthController {
     public ResponseEntity<GenericResponse> loginPerson(@Valid @RequestBody LoginPersonRequest request) throws ErrorProcessException {
         return ResponseEntity.status(HttpStatus.OK).body(new GenericResponse(Boolean.TRUE, "Person logged", personService.getOne(request)));
     }
-
-//    @PostMapping("/register")
-//    public ResponseEntity<AuthenticationResponse> register(@Valid @RequestBody RegisterPersonRequest request) {
-//
-//    }
-
-//    @PostMapping("/login")
-//    public ResponseEntity<AuthenticationResponse> register(@Valid @RequestBody LoginPersonRequest request) {
-//
-//    }
 }

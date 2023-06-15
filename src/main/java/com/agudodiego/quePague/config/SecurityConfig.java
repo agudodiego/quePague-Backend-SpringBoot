@@ -30,7 +30,7 @@ public class SecurityConfig {
             .disable()
             // configuramos la "lista blanca" (aquellas urls que no necesitan filtrarse)
             .authorizeHttpRequests()
-            .requestMatchers("**")
+            .requestMatchers("/API/auth/**")
             .permitAll()
             // luego le decimos que cualquier otra request debe estar autenticada
             .anyRequest()

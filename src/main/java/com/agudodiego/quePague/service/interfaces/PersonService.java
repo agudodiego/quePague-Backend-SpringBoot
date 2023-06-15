@@ -11,9 +11,7 @@ import java.util.List;
 
 public interface PersonService {
 
-//    String saveOne(RegisterPersonRequest request);
     AuthenticationResponse register(RegisterPersonRequest request);
-//    PersonResponse getOne(LoginPersonRequest request) throws ErrorProcessException;
     AuthenticationResponse getOne(LoginPersonRequest request) throws ErrorProcessException;
     PersonResponse getOneByUsername(String username) throws ErrorProcessException;
     List<BasicListPersonResponse> getBasicList() throws ErrorProcessException;

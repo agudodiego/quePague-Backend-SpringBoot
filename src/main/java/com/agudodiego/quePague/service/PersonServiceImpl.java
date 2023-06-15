@@ -32,13 +32,6 @@ public class PersonServiceImpl implements PersonService, PersonExistsService {
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
 
-//    @Override
-//    public String saveOne(RegisterPersonRequest request) {
-//        if (personExists(request.getUsername())) throw new DataIntegrityViolationException("This user already exist.");
-//        personRepository.save(RegisterPersonRequest.toEntity(request));
-//        return "Person saved in DB";
-//    }
-
     @Override
     public AuthenticationResponse register(RegisterPersonRequest request) {
         if (personExists(request.getUsername())) throw new DataIntegrityViolationException("This user already exist.");
@@ -54,17 +47,6 @@ public class PersonServiceImpl implements PersonService, PersonExistsService {
                 .token(jwtToken)
                 .build();
     }
-
-//    @Override
-//    public PersonResponse getOne(LoginPersonRequest request) throws ErrorProcessException {
-//        Person person = personRepository.findByUsername(request.getUsername()).orElseThrow(() -> new NotFoundException("Wrong username or password"));
-//        if (!person.getPass().equals(request.getPass())) throw new NotFoundException("Username or password doesn´t match");
-//        try{
-//            return PersonResponse.toResponse(person);
-//        } catch (RuntimeException e) {
-//            throw new ErrorProcessException("An error occurred in the process: " + e.getMessage());
-//        }
-//    }
 
     @Override
     public AuthenticationResponse getOne(LoginPersonRequest request) throws ErrorProcessException {
