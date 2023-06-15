@@ -19,11 +19,21 @@ public class AuthController {
 
     @PostMapping("/register")
     public ResponseEntity<GenericResponse> registerPerson(@Valid @RequestBody RegisterPersonRequest request) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(new GenericResponse(Boolean.TRUE, "Person created", personService.saveOne(request)));
+        return ResponseEntity.status(HttpStatus.CREATED).body(new GenericResponse(Boolean.TRUE, "Person created", personService.register(request)));
     }
 
     @PostMapping("/login")
     public ResponseEntity<GenericResponse> loginPerson(@Valid @RequestBody LoginPersonRequest request) throws ErrorProcessException {
         return ResponseEntity.status(HttpStatus.OK).body(new GenericResponse(Boolean.TRUE, "Person logged", personService.getOne(request)));
     }
+
+//    @PostMapping("/register")
+//    public ResponseEntity<AuthenticationResponse> register(@Valid @RequestBody RegisterPersonRequest request) {
+//
+//    }
+
+//    @PostMapping("/login")
+//    public ResponseEntity<AuthenticationResponse> register(@Valid @RequestBody LoginPersonRequest request) {
+//
+//    }
 }
