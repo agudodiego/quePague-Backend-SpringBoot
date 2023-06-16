@@ -33,7 +33,7 @@ public class PersonServiceImpl implements PersonService, PersonExistsService {
     private final AuthenticationManager authenticationManager;
 
     @Override
-    public AuthenticationResponse register(RegisterPersonRequest request) {
+    public String register(RegisterPersonRequest request) {
         if (personExists(request.getUsername())) throw new DataIntegrityViolationException("This user already exist.");
         var person = Person.builder()
                 .username(request.getUsername())
@@ -42,14 +42,15 @@ public class PersonServiceImpl implements PersonService, PersonExistsService {
                 .role(Role.USER)
                 .build();;
         personRepository.save(person);
-        var jwtToken = jwtService.generateToken(person);
-        return AuthenticationResponse.builder()
-                .token(jwtToken)
-                .build();
+//        var jwtToken = jwtService.generateToken(person);
+//        return AuthenticationResponse.builder()
+//                .token(jwtToken)
+//                .build();
+        return "Person added to the database";
     }
 
     @Override
-    public AuthenticationResponse getOne(LoginPersonRequest request) throws ErrorProcessException {
+    public AuthenticationResponse login(LoginPersonRequest request) throws ErrorProcessException {
         // si el siguiente metodo falla tira una excepcion
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPass()));
         // caso contrario necesito generar un token para ese usuario y devolverlo

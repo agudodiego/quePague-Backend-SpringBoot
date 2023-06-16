@@ -12,7 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/auth")
+@RequestMapping("/API/auth")
 @RequiredArgsConstructor
 public class AuthController {
     private final PersonService personService;
@@ -24,6 +24,6 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseEntity<GenericResponse> loginPerson(@Valid @RequestBody LoginPersonRequest request) throws ErrorProcessException {
-        return ResponseEntity.status(HttpStatus.OK).body(new GenericResponse(Boolean.TRUE, "Person logged", personService.getOne(request)));
+        return ResponseEntity.status(HttpStatus.OK).body(new GenericResponse(Boolean.TRUE, "Person logged", personService.login(request)));
     }
 }
