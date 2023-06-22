@@ -1,5 +1,6 @@
 package com.agudodiego.quePague.config;
 
+import com.agudodiego.quePague.model.entity.Role;
 import jakarta.servlet.Filter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -28,20 +29,28 @@ public class SecurityConfig {
         http
             .csrf()
             .disable()
+
             // configuramos la "lista blanca" (aquellas urls que no necesitan filtrarse)
             .authorizeHttpRequests()
             .requestMatchers("/API/auth/**")
             .permitAll()
+
+            // configuramos el endpoint /API/admin para que solo sea accesible por los usuarios )
+            .requestMatchers("/API/admin/**").hasAuthority(Role.ADMIN.name())
+
             // luego le decimos que cualquier otra request debe estar autenticada
             .anyRequest()
             .authenticated()
             .and()
+
             // luego configuro el manejo de la sesion, el estado de la sesion NO debe ser guardado, ésto nos ayuda a que podamos verificar CADA request
             .sessionManagement()
             .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             .and()
+
             // luego le decimos que proveedor de autenticacion queremos usar
             .authenticationProvider(authenicationProvider)
+
             // luego uso el filtro creado por mi, lo ejecuto ANTES del filtro UsernamePasswordAuthenticationFilter
             .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
 

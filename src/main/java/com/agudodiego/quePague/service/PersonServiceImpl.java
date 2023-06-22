@@ -40,7 +40,7 @@ public class PersonServiceImpl implements PersonService, PersonExistsService {
                 .pass(passwordEncoder.encode(request.getPass()))
                 .email(request.getEmail())
                 .role(Role.USER)
-                .build();;
+                .build();
         personRepository.save(person);
 //        var jwtToken = jwtService.generateToken(person);
 //        return AuthenticationResponse.builder()
