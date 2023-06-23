@@ -20,6 +20,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -42,10 +43,6 @@ public class PersonServiceImpl implements PersonService, PersonExistsService {
                 .role(Role.USER)
                 .build();
         personRepository.save(person);
-//        var jwtToken = jwtService.generateToken(person);
-//        return AuthenticationResponse.builder()
-//                .token(jwtToken)
-//                .build();
         return "Person added to the database";
     }
 
@@ -55,7 +52,10 @@ public class PersonServiceImpl implements PersonService, PersonExistsService {
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPass()));
         // caso contrario necesito generar un token para ese usuario y devolverlo
         var person = personRepository.findByUsername(request.getUsername()).orElseThrow(()-> new ErrorProcessException("An error occurred in the process"));
-        var jwtToken = jwtService.generateToken(person);
+        // las dos lineas siguientes son para agregar en el payload del token datos exta (en este caso el ROL de la persona)
+        var extraClaims = new HashMap<String, Object>();
+        extraClaims.put("role", person.getRole().name());
+        var jwtToken = jwtService.generateToken(extraClaims, person);
         return AuthenticationResponse.builder()
                 .token(jwtToken)
                 .build();
