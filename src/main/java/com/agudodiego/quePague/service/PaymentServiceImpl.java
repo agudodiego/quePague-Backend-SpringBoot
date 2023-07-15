@@ -66,6 +66,22 @@ public class PaymentServiceImpl implements PaymentService, PersonExistsService, 
     }
 
     @Override
+    public String resetAllPayments(String username) throws ErrorProcessException {
+        Person person = personRepository.findByUsername(username).orElseThrow(()-> new NotFoundException("This person ("+username+") doesn´t exist in the DB"));
+        try {
+            for (Payment p : person.getPayments()) {
+                p.setAlreadyPaid(false);
+                p.setPayDate(null);
+            }
+            personRepository.save(person);
+            return "All payments reset!";
+        }catch (RuntimeException e) {
+            throw new ErrorProcessException("An error occurred in the process: " + e.getMessage());
+        }
+    }
+
+
+    @Override
     public Boolean personExists(String username) {
         return personRepository.existsByUsername(username);
     }
