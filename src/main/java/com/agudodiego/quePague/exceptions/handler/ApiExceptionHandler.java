@@ -3,6 +3,7 @@ package com.agudodiego.quePague.exceptions.handler;
 import com.agudodiego.quePague.exceptions.ErrorProcessException;
 import com.agudodiego.quePague.exceptions.ErrorResponse;
 import com.agudodiego.quePague.exceptions.NotFoundException;
+import io.jsonwebtoken.ExpiredJwtException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.FieldError;
@@ -52,5 +53,14 @@ public class ApiExceptionHandler {
                 .map(FieldError::getDefaultMessage)
                 .collect(Collectors.toList());
         return new ErrorResponse(errorsList, HttpStatus.BAD_REQUEST.value());
+    }
+
+    // EXCEPCIONES DE SECURITY **********************************
+    // (no esta siendo agarrada)
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    @ExceptionHandler(ExpiredJwtException.class)
+    @ResponseBody
+    public ErrorResponse handleExpiredJwtException(ExpiredJwtException e){
+        return new ErrorResponse(Arrays.asList(e.getMessage()), HttpStatus.FORBIDDEN.value());
     }
 }
