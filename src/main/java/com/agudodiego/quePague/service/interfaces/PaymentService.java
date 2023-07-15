@@ -11,4 +11,5 @@ public interface PaymentService {
     PaymentResponse saveOne(String username, Payment payment) throws ErrorProcessException;
     PaymentResponse updatePayment(Payment payment) throws ErrorProcessException;
     String deletePayment(Integer id) throws ErrorProcessException;
+    String resetAllPayments(String username) throws ErrorProcessException;
 }

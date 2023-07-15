@@ -1,6 +1,7 @@
 package com.agudodiego.quePague.model.request;
 
 import com.agudodiego.quePague.model.entity.Person;
+import com.agudodiego.quePague.model.entity.Role;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
@@ -26,11 +27,12 @@ public class RegisterPersonRequest {
     @Email(message = "Email must be a valid email")
     private String email;
 
-    public static Person toEntity(RegisterPersonRequest request) {
-        return Person.builder()
-                .username(request.getUsername())
-                .pass(request.getPass())
-                .email(request.getEmail())
-                .build();
-    }
+//    public static Person toEntity(RegisterPersonRequest request) {
+//        return Person.builder()
+//                .username(request.getUsername())
+//                .pass(request.getPass())
+//                .email(request.getEmail())
+//                .role(Role.USER)
+//                .build();
+//    }
 }

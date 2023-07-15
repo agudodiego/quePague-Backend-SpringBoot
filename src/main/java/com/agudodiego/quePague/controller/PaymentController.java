@@ -12,7 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/payment")
+@RequestMapping("/API/payment")
 @RequiredArgsConstructor
 public class PaymentController {
 
@@ -23,10 +23,16 @@ public class PaymentController {
                 .body(new GenericResponse(Boolean.TRUE, "Payment created", paymentService.saveOne(request.getUsername(), AddPaymentRequest.toEntity(request))));
     }
 
+    @PutMapping("/{username}")
+    public ResponseEntity<GenericResponse> resetPayments(@PathVariable String username) throws ErrorProcessException{
+        return ResponseEntity.status(HttpStatus.ACCEPTED)
+                .body(new GenericResponse(Boolean.TRUE, "Payments reset OK", paymentService.resetAllPayments(username)));
+    }
+
     @PutMapping()
     public ResponseEntity<GenericResponse> updateOnePayment(@Valid @RequestBody UpdatePaymentRequest request) throws ErrorProcessException{
         return ResponseEntity.status(HttpStatus.ACCEPTED)
-                .body(new GenericResponse(Boolean.TRUE, "payment updated", paymentService.updatePayment(UpdatePaymentRequest.toEntity(request))));
+                .body(new GenericResponse(Boolean.TRUE, "payment updated OK", paymentService.updatePayment(UpdatePaymentRequest.toEntity(request))));
     }
 
     @DeleteMapping("/{id}")
