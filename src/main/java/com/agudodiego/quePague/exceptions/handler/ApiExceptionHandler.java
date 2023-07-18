@@ -6,6 +6,8 @@ import com.agudodiego.quePague.exceptions.NotFoundException;
 import io.jsonwebtoken.ExpiredJwtException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+import java.nio.file.AccessDeniedException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -55,12 +58,31 @@ public class ApiExceptionHandler {
         return new ErrorResponse(errorsList, HttpStatus.BAD_REQUEST.value());
     }
 
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    @ExceptionHandler(BadCredentialsException.class)
+    @ResponseBody
+    public ErrorResponse handleExpiredJwtException(BadCredentialsException e){
+        return new ErrorResponse(Arrays.asList(e.getMessage()), HttpStatus.UNAUTHORIZED.value());
+    }
+
+    /* Maneja cualquier otra excepcion no contemplada */
+//    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+//    @ExceptionHandler(Exception.class)
+//    @ResponseBody
+//    public ErrorResponse handleNotFoundException(Exception e){
+//        return new ErrorResponse(Arrays.asList("A server internal error occured"), HttpStatus.INTERNAL_SERVER_ERROR.value());
+//    }
+
     // EXCEPCIONES DE SECURITY **********************************
     // (no esta siendo agarrada)
     @ResponseStatus(HttpStatus.FORBIDDEN)
-    @ExceptionHandler(ExpiredJwtException.class)
+    @ExceptionHandler(AccessDeniedException.class)
     @ResponseBody
-    public ErrorResponse handleExpiredJwtException(ExpiredJwtException e){
+    public ErrorResponse handleExpiredJwtException(AccessDeniedException e){
         return new ErrorResponse(Arrays.asList(e.getMessage()), HttpStatus.FORBIDDEN.value());
     }
+
+
+
+
 }
