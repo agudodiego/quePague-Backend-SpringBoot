@@ -1,7 +1,6 @@
 package com.agudodiego.quePague.config;
 
 import com.agudodiego.quePague.model.entity.Role;
-import jakarta.servlet.Filter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
@@ -21,6 +20,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfig {
     /* Esta clase actua como binding (Spring <-> mi filtro) ya que le dice a Spring que configuracion queremos usar
     para hacer que el proceso de autenticacion funcione */
+
 
     @Qualifier("delegatedAuthenticationEntryPoint")
     private final AuthenticationEntryPoint authEntryPoint;
