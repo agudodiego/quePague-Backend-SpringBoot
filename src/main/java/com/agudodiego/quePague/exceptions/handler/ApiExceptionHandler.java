@@ -58,12 +58,12 @@ public class ApiExceptionHandler {
         return new ErrorResponse(errorsList, HttpStatus.BAD_REQUEST.value());
     }
 
-    @ResponseStatus(HttpStatus.UNAUTHORIZED)
-    @ExceptionHandler(BadCredentialsException.class)
-    @ResponseBody
-    public ErrorResponse handleExpiredJwtException(BadCredentialsException e){
-        return new ErrorResponse(Arrays.asList(e.getMessage()), HttpStatus.UNAUTHORIZED.value());
-    }
+//    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+//    @ExceptionHandler(BadCredentialsException.class)
+//    @ResponseBody
+//    public ErrorResponse handleExpiredJwtException(BadCredentialsException e){
+//        return new ErrorResponse(Arrays.asList(e.getMessage()), HttpStatus.UNAUTHORIZED.value());
+//    }
 
     /* Maneja cualquier otra excepcion no contemplada */
 //    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
@@ -72,17 +72,5 @@ public class ApiExceptionHandler {
 //    public ErrorResponse handleNotFoundException(Exception e){
 //        return new ErrorResponse(Arrays.asList("A server internal error occured"), HttpStatus.INTERNAL_SERVER_ERROR.value());
 //    }
-
-    // EXCEPCIONES DE SECURITY **********************************
-    // (no esta siendo agarrada)
-    @ResponseStatus(HttpStatus.FORBIDDEN)
-    @ExceptionHandler(AccessDeniedException.class)
-    @ResponseBody
-    public ErrorResponse handleExpiredJwtException(AccessDeniedException e){
-        return new ErrorResponse(Arrays.asList(e.getMessage()), HttpStatus.FORBIDDEN.value());
-    }
-
-
-
 
 }

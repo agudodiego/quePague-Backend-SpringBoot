@@ -3,6 +3,7 @@ package com.agudodiego.quePague.config;
 import com.agudodiego.quePague.model.entity.Role;
 import jakarta.servlet.Filter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -10,6 +11,7 @@ import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
@@ -20,6 +22,8 @@ public class SecurityConfig {
     /* Esta clase actua como binding (Spring <-> mi filtro) ya que le dice a Spring que configuracion queremos usar
     para hacer que el proceso de autenticacion funcione */
 
+    @Qualifier("delegatedAuthenticationEntryPoint")
+    private final AuthenticationEntryPoint authEntryPoint;
     private final JwtAuthenticationFilter jwtAuthFilter;
     private final AuthenticationProvider authenicationProvider;
 
@@ -28,6 +32,9 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
+            .exceptionHandling()
+            .authenticationEntryPoint(authEntryPoint)
+            .and()
             .csrf()
             .disable()
             .cors(Customizer.withDefaults())
