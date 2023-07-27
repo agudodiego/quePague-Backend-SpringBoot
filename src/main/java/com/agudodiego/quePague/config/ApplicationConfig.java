@@ -28,7 +28,7 @@ public class ApplicationConfig {
 
     @Bean
     public AuthenticationProvider authenicationProvider() {
-    /* El authenicationProvider es el Data Access Object (DAO) responsable de capturar los userDetails y tambien de codificar
+    /* El authenicationProvider es el "Data Access Object" (DAO) responsable de capturar los userDetails y tambien de codificar
     la contraseña, etc. */
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
         authProvider.setUserDetailsService(userDetailsService());
