@@ -24,6 +24,7 @@ public class AddPaymentRequest {
         Payment payment = new Payment();
         payment.setTitle(request.getTitle());
         payment.setAlreadyPaid(false);
+        payment.setIsPayMonth(0);
         return payment;
     }
 }

@@ -21,6 +21,7 @@ public class PaymentResponse {
     private String title;
     private LocalDate payDate;
     private Boolean alreadyPaid;
+    private Integer isPayMonth;
     private String note;
 
     public static PaymentResponse toResponse(Payment payment) {
@@ -29,6 +30,7 @@ public class PaymentResponse {
                 .title(payment.getTitle())
                 .payDate(payment.getPayDate())
                 .alreadyPaid(payment.getAlreadyPaid())
+                .isPayMonth(payment.getIsPayMonth())
                 .note(payment.getNote())
                 .build();
     }

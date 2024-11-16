@@ -25,6 +25,8 @@ public class Payment {
     private LocalDate payDate;
     @Column(name = "already_paid", nullable = false)
     private Boolean alreadyPaid;
+    @Column(name = "is_pay_month")
+    private Integer isPayMonth;
     @Column(name = "note", length = 255)
     private String note;
 }

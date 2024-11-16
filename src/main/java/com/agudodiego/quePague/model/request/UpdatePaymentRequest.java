@@ -22,6 +22,7 @@ public class UpdatePaymentRequest {
     private String title;
     private LocalDate payDate;
     private Boolean alreadyPaid;
+    private Integer isPayMonth;
     private String note;
 
     public static Payment toEntity(UpdatePaymentRequest request) {
@@ -30,7 +31,13 @@ public class UpdatePaymentRequest {
                 .title(request.getTitle())
                 .payDate(request.getPayDate())
                 .alreadyPaid(request.getAlreadyPaid())
+                .isPayMonth(chequearMes(request.getIsPayMonth()))
                 .note(request.getNote())
                 .build();
+    }
+
+    public static Integer chequearMes(Integer mes) {
+        if (mes != null && (mes > 0 && mes <= 12)) return mes;
+        return 0;
     }
 }
